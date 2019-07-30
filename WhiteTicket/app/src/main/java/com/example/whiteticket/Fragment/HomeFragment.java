@@ -37,6 +37,14 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {}
 
+    public static HomeFragment newInstance(User user) {
+        HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("User",user);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
