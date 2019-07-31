@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.example.whiteticket.Module.HttpAsyncTask;
 import com.example.whiteticket.Module.MyCallBack;
-import com.example.whiteticket.Module.ResultBody;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import static android.content.ContentValues.TAG;
@@ -45,14 +45,17 @@ public class Login {
 
         new HttpAsyncTask("POST", "android",
                 new User(inputId , inputPw).getJsonObject(),
-                null, new TypeToken<ResultBody<String>>() {
+                null, new TypeToken<JsonObject>() {
         }.getType(),
                 new MyCallBack() {
                     @Override
                     public void doTask(Object resultBody) {
-                        ResultBody<String> result = (ResultBody<String>)resultBody;
-                        System.out.println("in doTask" + result.getDatas());
-                        if(inputPw.equals(result.getDatas().get(0))){
+                        JsonObject result = (JsonObject)resultBody;
+                        String getPw = result.get("pw").toString();
+                        getPw = getPw.replaceAll("\"" , "");
+                        System.out.println("in doTask : " + result);
+                        System.out.println(inputPw + " , " + getPw);
+                        if(inputPw.equals(getPw)){
                             flag = true;
                             Log.d(TAG, "doTask: " + result);
                         }
@@ -61,7 +64,7 @@ public class Login {
 
         if(flag == true) {
             saveAutoLogin(true); // 로그인 성공할경우 자동로그인을 켜놓는다.
-
+            System.out.println("return true");
             return true; // 임시로 true 해준다. true - 로그인 성공, false - 로그인 실패
         }
         else{

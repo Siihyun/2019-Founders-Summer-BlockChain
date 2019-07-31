@@ -1,26 +1,16 @@
 package com.example.whiteticket.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.whiteticket.Data.User;
 import com.example.whiteticket.Interface.LoginInterface;
-import com.example.whiteticket.Module.HttpAsyncTask;
-import com.example.whiteticket.Module.MyCallBack;
-import com.example.whiteticket.Module.ResultBody;
 import com.example.whiteticket.Presenter.LoginPresenter;
 import com.example.whiteticket.R;
-import com.google.gson.reflect.TypeToken;
 
 
 public class LoginActivity extends AppCompatActivity implements LoginInterface.View, View.OnClickListener {

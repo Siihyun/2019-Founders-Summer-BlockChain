@@ -24,8 +24,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class HttpAsyncTask extends AsyncTask<Void, Void, ResultBody> implements JsonDeserializer {
-    private String url = "http://10.16.136.220:3000/";
+public class HttpAsyncTask extends AsyncTask<Void, Void, JsonObject> implements JsonDeserializer {
+    private String url = "http://10.16.134.113:3000/";
     private String action;
     private String path;
     private Type typeToken;
@@ -62,10 +62,10 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, ResultBody> implements 
     OkHttpClient client = new OkHttpClient();
 
     @Override
-    protected ResultBody doInBackground(Void... params) {
+    protected JsonObject doInBackground(Void... params) {
         String strUrl = this.url + this.path;
         System.out.println(strUrl);
-        ResultBody resultBody = null;
+        JsonObject resultBody = null;
 
         try {
             Request request = null;
@@ -104,18 +104,11 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, ResultBody> implements 
 
             // 응답 : header, body 정보 담겨있음
             Response response = client.newCall(request).execute();
-
             Gson gson = new Gson();
             String responseString = response.body().string();
-            System.out.println(responseString);
-            JsonObject jsonObject = gson.fromJson(responseString, JsonObject.class);
-            resultBody = jsonObject;
-
-//            Gson gson = new Gson();
-//            String responseString = response.body().string();
-//            System.out.println(responseString.toString());
-//            resultBody = gson.fromJson(responseString, typeToken); //fromJson 사용하면 자동으로 변환
-//            System.out.println(resultBody.getDatas());
+            System.out.println(responseString.toString());
+            JsonElement element = gson.fromJson(responseString, JsonElement.class);
+            resultBody = element.getAsJsonObject();
 
         } catch (IOException e ) {
             e.printStackTrace();
@@ -123,12 +116,12 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, ResultBody> implements 
             e.printStackTrace();
         }
 
-        //return new ResultBody<>(resultBody.getSuccess(), resultBody.getSize(), resultBody.getDatas(), resultBody.getError(), resultBody.getNewUser());
+       // return new ResultBody<>(resultBody.getSuccess(), resultBody.getSize(), resultBody.getDatas(), resultBody.getError(), resultBody.getNewUser());
         return resultBody;
     }
 
     @Override
-    protected void onPostExecute(ResultBody resultBody) {
+    protected void onPostExecute(JsonObject resultBody) {
         super.onPostExecute(resultBody);
 
         this.callback.doTask(resultBody);

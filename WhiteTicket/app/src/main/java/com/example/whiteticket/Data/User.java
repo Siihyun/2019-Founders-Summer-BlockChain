@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User implements Parcelable {
-    String id, pw;
+    String id;
+    String pw;
+
     public User(){
         id = null;
         pw = null;
