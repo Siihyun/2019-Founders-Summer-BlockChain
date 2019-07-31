@@ -14,18 +14,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.whiteticket.Data.User;
+import com.example.whiteticket.Interface.LoginInterface;
 import com.example.whiteticket.Module.HttpAsyncTask;
 import com.example.whiteticket.Module.MyCallBack;
 import com.example.whiteticket.Module.ResultBody;
+import com.example.whiteticket.Presenter.LoginPresenter;
 import com.example.whiteticket.R;
 import com.google.gson.reflect.TypeToken;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements LoginInterface.View, View.OnClickListener {
 
-    EditText id , pw;
-    Button loginButton = null;
-    Button singupButton = null;
+
+    private LoginInterface.Presenter presenter;
+
+    private Button loginBtn;
+    private Button registerBtn;
+
+    private EditText idEdit;
+    private EditText passwordEdit;
+    private Button login;
 
     User user = new User();
 
@@ -34,60 +42,69 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        id = findViewById(R.id.login_id);
-        pw = findViewById(R.id.login_pw);
-
-        loginButton = findViewById(R.id.login_login);
-        loginButton.setOnClickListener(this);
-
-        singupButton = findViewById(R.id.login_login);
-        singupButton.setOnClickListener(this);
+        presenter = new LoginPresenter(LoginActivity.this,getApplicationContext(),this);
+        presenter.presenterView();
     }
 
     @Override
     public void onClick(View v) {
 
-        System.out.println("button pressed");
         switch (v.getId()){
-            case R.id.login_login:
-                System.out.println("login pressed");
-                logIn();
+            case R.id.loginBtn:
                 break;
-            case R.id.login_signup:
-                signUp();
+            case R.id.registerBtn:
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.login_login:
+                String inputId = idEdit.getText().toString();
+                String inputPw = passwordEdit.getText().toString();
+
+                presenter.Login(inputId, inputPw);
                 break;
         }
     }
 
-    private void logIn(){
+//    private void logIn(){
+//
+//        final String ID = id.getText().toString();
+//        final String PW = pw.getText().toString();
+//        new HttpAsyncTask("POST", "",
+//                new User(ID , PW).getJsonObject(),
+//                null, new TypeToken<ResultBody<User>>() {
+//        }.getType(),
+//                new MyCallBack() {
+//                    @Override
+//                    public void doTask(Object resultBody) {
+//                        System.out.println("make user");
+//                        System.out.println(ID + PW);
+//                    }
+//                }).execute();
+//
+//        user.setId(ID);
+//        user.setPw(PW);
+//
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra("User", user);
+//        startActivity(intent);
+//    }
+//
+//    private void signUp(){
+//
+//    }
 
-        final String ID = id.getText().toString();
-        final String PW = pw.getText().toString();
-        new HttpAsyncTask("POST", "",
-                new User(ID , PW).getJsonObject(),
-                null, new TypeToken<ResultBody<User>>() {
-        }.getType(),
-                new MyCallBack() {
-                    @Override
-                    public void doTask(Object resultBody) {
-                        System.out.println("make user");
-                        System.out.println(ID + PW);
-                    }
-                }).execute();
 
-        user.setId(ID);
-        user.setPw(PW);
+    @Override
+    public void setView() {
+        loginBtn = (Button)findViewById(R.id.loginBtn);
+        registerBtn = (Button)findViewById(R.id.registerBtn);
+        idEdit = (EditText)findViewById(R.id.idEdit);
+        passwordEdit = (EditText)findViewById(R.id.passwordEdit);
+        login = (Button)findViewById(R.id.login_login);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("User", user);
-        startActivity(intent);
+        loginBtn.setOnClickListener(this);
+        registerBtn.setOnClickListener(this);
+        login.setOnClickListener(this);
     }
-
-    private void signUp(){
-
-    }
-
-
-
 }

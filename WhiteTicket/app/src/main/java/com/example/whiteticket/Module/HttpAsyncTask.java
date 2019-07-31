@@ -7,15 +7,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Iterator;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -26,7 +25,7 @@ import okhttp3.Response;
 
 
 public class HttpAsyncTask extends AsyncTask<Void, Void, ResultBody> implements JsonDeserializer {
-    private String url = "http://3.17.173.194:3000/";
+    private String url = "http://10.16.136.220:3000/";
     private String action;
     private String path;
     private Type typeToken;
@@ -105,17 +104,27 @@ public class HttpAsyncTask extends AsyncTask<Void, Void, ResultBody> implements 
 
             // 응답 : header, body 정보 담겨있음
             Response response = client.newCall(request).execute();
+
             Gson gson = new Gson();
             String responseString = response.body().string();
-            System.out.println(responseString.toString());
-            resultBody = gson.fromJson(responseString, typeToken); //fromJson 사용하면 자동으로 변환
+            System.out.println(responseString);
+            JsonObject jsonObject = gson.fromJson(responseString, JsonObject.class);
+            resultBody = jsonObject;
+
+//            Gson gson = new Gson();
+//            String responseString = response.body().string();
+//            System.out.println(responseString.toString());
+//            resultBody = gson.fromJson(responseString, typeToken); //fromJson 사용하면 자동으로 변환
+//            System.out.println(resultBody.getDatas());
+
         } catch (IOException e ) {
             e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return new ResultBody<>(resultBody.getSuccess(), resultBody.getSize(), resultBody.getDatas(), resultBody.getError(), resultBody.getNewUser());
+        //return new ResultBody<>(resultBody.getSuccess(), resultBody.getSize(), resultBody.getDatas(), resultBody.getError(), resultBody.getNewUser());
+        return resultBody;
     }
 
     @Override
