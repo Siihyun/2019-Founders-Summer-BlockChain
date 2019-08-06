@@ -19,12 +19,12 @@
 3. Execution:
 
    Please follow below steps.
-
-   `1 . Launch cmd and input truffle migrate
+   ```
+    1 . Launch cmd and input truffle migrate
     2 . truffle compile`
     3 . node app
-    4 . Access to http://localhost:3000`
-
+    4 . Access to http://localhost:3000
+   ```
 4. Youtube Video
 
    [![Video Label](http://img.youtube.com/vi/to3_MNrjf_8/0.jpg)](https://youtu.be/to3_MNrjf_8?t=0s)
