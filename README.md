@@ -30,6 +30,7 @@ After the purchase, users will receive smart tickets through our application. Al
     3 . node app
     4 . Access to http://localhost:3000
    ```
-4. Youtube Video
+   
+## Youtube Video
 
    [![Video Label](http://img.youtube.com/vi/to3_MNrjf_8/0.jpg)](https://youtu.be/to3_MNrjf_8?t=0s)
