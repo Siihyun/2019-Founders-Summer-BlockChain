@@ -2,8 +2,10 @@
 
 ## About
 
-[White Ticket] is a peer to peer ticketing platform based on _smart contract_. 
+_White Ticket_ is a peer to peer ticketing platform based on _smart contract_. 
+
 Once an agency releases concert tickets, users can buy them directly through our platform. Our platform also allows private ticket transactions between users. 
+
 After the purchase, users will receive smart tickets through our application. All the transactions are dealt with ethereum.
 
 ## Quick Start
