@@ -21,7 +21,7 @@
    Please follow below steps.
    ```
     1 . Launch cmd and input truffle migrate
-    2 . truffle compile`
+    2 . truffle compile
     3 . node app
     4 . Access to http://localhost:3000
    ```
