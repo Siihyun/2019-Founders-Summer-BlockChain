@@ -12,7 +12,7 @@ After the purchase, users will receive smart tickets through our application. Al
 
 1. Introduction:
 
-   Installation requires [Git] and triggers [`git clone`] for each configured repository.
+   Installation requires [`Git`] and triggers [`git clone`] for each configured repository.
    And you should install truffle and ganache.
 
    After installation go directly to [cmd] or [console env] and follow below steps.
